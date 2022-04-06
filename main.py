@@ -13,7 +13,7 @@ class Solution:
             else:
                 current += 1
 
-        neg = s_nums[0:positiv_i-1]
+        neg = s_nums[0:positiv_i]
         neg.sort(reverse=True)
         pos = s_nums[positiv_i:]
 
@@ -37,7 +37,9 @@ class Solution:
                         mid_num = pos[k]
                         sum3 = sum2 + mid_num
                         if sum3 == 0:
-                            results.append((num_n, mid_num, num_p))
+                            result = (num_n, mid_num, num_p)
+                            if result not in results:
+                                results.append(result)
                         elif sum3 > 0:
                             break
                     k += 1
@@ -47,7 +49,9 @@ class Solution:
                         mid_num = neg[k]
                         sum3 = sum2 + mid_num
                         if sum3 == 0:
-                            results.append((num_n, mid_num, num_p))
+                            result = (num_n, mid_num, num_p)
+                            if result not in results:
+                                results.append(result)
                         elif sum3 < 0:
                             break
                     k += 1
