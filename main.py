@@ -5,8 +5,6 @@ class Solution:
 
     def threeSum(self, nums: list[int]) -> list[list[int]]:
 
-        start_time = time.time()
-        min = 0
         max = len(nums)
         results = []
         for i in range(max):
