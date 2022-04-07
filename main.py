@@ -5,42 +5,45 @@ class Solution:
         if len(nums) < 3:
             return []
 
+        # Разделим на два массива: в вервом положительные числа, во втором 0 и отрицательные
         sorted_nums = nums.copy()
         sorted_nums.sort()
         positiv_i = 0
-        current = 0
-        is_zero = False
-        while positiv_i == 0 and current < len(sorted_nums):
-            current_num = sorted_nums[current]
-            if current_num > 0 or is_zero and current_num == 0:
-                positiv_i = current
+        while positiv_i < len(sorted_nums)-1:
+            current_num = sorted_nums[positiv_i]
+            if current_num > 0:
                 break
             else:
-                current += 1
-            if current_num == 0 and not is_zero:
-                is_zero = True
+                positiv_i += 1
 
         neg = sorted_nums[0:positiv_i]
         neg.sort(reverse=True)
         pos = sorted_nums[positiv_i:]
 
+        # Если нулей много, то один должен попасть в массив положительных
+        if len(pos) == 0 and len(neg) != 0 and neg[0] == 0:
+            pos.append(0)
+            neg.pop(0)
+
         results = []
 
-        i_max = len(neg)
-        j_max = len(pos)
+        n_max = len(neg)
+        p_max = len(pos)
 
-        i = 0
-        j = 0
+        # Обходим одновременно оба массива в порядке увеличения модуля, подбирая третье число из обоих
+        n = 0
+        p = 0
         k = 0
-        iter_pos = True
-        while i < i_max and j < j_max:
-            num_n = neg[i]
-            num_p = pos[j]
+        while n < n_max or p < p_max:
+            num_n = neg[n]
+            num_p = pos[p]
 
             sum2 = num_p + num_n
-            if sum2 <= 0:
-                while k <= j+1 and k < j_max:
-                    if k != j:
+
+            # Если сумма меньше 0, обхдим положительный массив
+            if sum2 < 0:
+                while k < p_max-1:
+                    if k != p:
                         mid_num = pos[k]
                         sum3 = sum2 + mid_num
                         if sum3 == 0:
@@ -49,12 +52,21 @@ class Solution:
                             result = tuple(result)
                             if result not in results:
                                 results.append(result)
+                            break
                         elif sum3 > 0:
                             break
-                    k += 1
+                        elif sum3 < 0:
+                            k += 1
+                    else:
+                        k += 1
+
+            # Если сумма больше или равна 0, обхдим отрицательный массив
             if sum2 >= 0:
-                while k <= i+1 and k < i_max:
-                    if k != i:
+                # mid_num = None
+                while k < n_max-1:
+                    if k != n:
+                        # if k > n and mid_num is not None and mid_num != neg[k]:
+                        #     break
                         mid_num = neg[k]
                         sum3 = sum2 + mid_num
                         if sum3 == 0:
@@ -63,15 +75,29 @@ class Solution:
                             result = tuple(result)
                             if result not in results:
                                 results.append(result)
+                            break
                         elif sum3 < 0:
                             break
-                    k += 1
+                        elif sum3 > 0:
+                            k += 1
+                    else:
+                        k += 1
 
-            if iter_pos:
-                j += 1
+            if sum2 >= 0:
+                if p < p_max-1:
+                    p += 1
+                elif n < n_max-1:
+                    n += 1
+                else:
+                    break
             else:
-                i += 1
-            iter_pos = not iter_pos
+                if n < n_max - 1:
+                    n += 1
+                elif p < p_max-1:
+                    p += 1
+                else:
+                    break
+
             k = 0
 
         return results
@@ -82,6 +108,8 @@ sol = Solution()
 print(sol.threeSum(nums=[-1, 0, 1, 2, -1, -4]))
 
 print(sol.threeSum(nums=[0,0,0]))
+
+print(sol.threeSum(nums=[3,0,-2,-1,1,2]))
 
 print(sol.threeSum(nums=[-1,0,1,0]))
 
