@@ -46,7 +46,6 @@ class Solution:
                 elif need_for_0 > 0:
                     count_of_x = pos.count(need_for_0)
                     if (count_of_x > 0 and need_for_0 != p_num) or count_of_x > 1:
-                        pass
                         self.add_to_results(results, n_num, need_for_0, p_num)
             # print("Итерация с числом {} ({:.2%}): {:.2} seconds.".format(n_num, n/neg_count, time.time() - iter_time))
         print("Total: {} seconds.".format(time.time() - start_time))
