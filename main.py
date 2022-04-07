@@ -20,6 +20,9 @@ class Solution:
         neg.sort(reverse=True)
         pos = sorted_nums[positiv_i:]
 
+        if len(neg) == 0 or len(pos) == 0:
+            return []
+
         # Если нулей много, то один должен попасть в массив положительных
         if len(pos) == 0 and len(neg) != 0 and neg[0] == 0:
             pos.append(0)
@@ -106,6 +109,8 @@ sol = Solution()
 print(sol.threeSum(nums=[-1, 0, 1, 2, -1, -4]))
 
 print(sol.threeSum(nums=[0,0,0]))
+
+print(sol.threeSum(nums=[1,1,1]))
 
 print(sol.threeSum(nums=[3,0,-2,-1,1,2]))
 
