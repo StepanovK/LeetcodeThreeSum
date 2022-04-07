@@ -49,7 +49,7 @@ class Solution:
                         if sum3 == 0:
                             result = [num_n, mid_num, num_p]
                             result.sort()
-                            result = tuple(result)
+                            # result = tuple(result)
                             if result not in results:
                                 results.append(result)
                             break
@@ -65,14 +65,12 @@ class Solution:
                 # mid_num = None
                 while k < n_max-1:
                     if k != n:
-                        # if k > n and mid_num is not None and mid_num != neg[k]:
-                        #     break
                         mid_num = neg[k]
                         sum3 = sum2 + mid_num
                         if sum3 == 0:
                             result = [num_n, mid_num, num_p]
                             result.sort()
-                            result = tuple(result)
+                            # result = tuple(result)
                             if result not in results:
                                 results.append(result)
                             break
